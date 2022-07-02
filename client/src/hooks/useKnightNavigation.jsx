@@ -45,7 +45,6 @@ function useKnightNavigation() {
 
   return {
     knightPosition,
-    handleMoveKnight,
   };
 }
 
