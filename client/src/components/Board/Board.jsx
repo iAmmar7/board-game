@@ -3,20 +3,30 @@ import { Row, Col } from 'antd';
 
 import './Board.modules.css';
 import { BOARD_COLS, BOARD_ROWS } from '../../utils/constants';
-import { useKnightNavigation, useBoard } from '../../hooks';
+import { useBoard } from '../../hooks';
 import Cell from './Cell';
 
 function Board() {
-  const { knightPosition } = useKnightNavigation();
-  const { dangerSet, collectableSet: randomCollectables } = useBoard();
-  const [collectableSet, setCollectableSet] = useState(randomCollectables);
+  const [gameOver, setGameOver] = useState(false);
+
+  const handleWon = useCallback(() => {
+    console.log('won');
+    setGameOver(true);
+  }, []);
+
+  const handleFailed = useCallback(() => {
+    console.log('failed');
+    setGameOver(true);
+  }, []);
+
+  const { knightPosition, dangerPositions, collectablePositions } = useBoard(gameOver, handleWon, handleFailed);
 
   const cellRenderer = useCallback(() => {
     return Array.from(new Array(BOARD_ROWS)).map((_, row) => {
       const col = Array.from(new Array(BOARD_COLS)).map((_, col) => {
         const knight = knightPosition[0] === row && knightPosition[1] === col;
-        const danger = dangerSet.has(`${row},${col}`);
-        const collectable = collectableSet.has(`${row},${col}`);
+        const danger = dangerPositions.has(`${row},${col}`);
+        const collectable = collectablePositions.has(`${row},${col}`);
         return (
           <Col key={col} className='gutter-box'>
             <Cell row={row} col={col} knight={knight} danger={danger} collectable={collectable} />
@@ -25,7 +35,7 @@ function Board() {
       });
       return <Row key={row}>{col}</Row>;
     });
-  }, [collectableSet, dangerSet, knightPosition]);
+  }, [collectablePositions, dangerPositions, knightPosition]);
 
   return <section className='board'>{cellRenderer()}</section>;
 }

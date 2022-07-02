@@ -1,29 +1,27 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { BOARD_ROWS, BOARD_COLS } from '../utils/constants';
 
-function useKnightNavigation() {
-  const [knightPosition, setKnightPosition] = useState([0, 0]);
-
+function useKnightNavigation(knightPosition, handleNewPosition) {
   const moveRight = useCallback(() => {
     if (knightPosition[1] === BOARD_COLS - 1) return;
-    setKnightPosition((oldPostion) => [oldPostion[0], oldPostion[1] + 1]);
-  }, [knightPosition]);
+    handleNewPosition(knightPosition[0], knightPosition[1] + 1);
+  }, [handleNewPosition, knightPosition]);
 
   const moveLeft = useCallback(() => {
     if (knightPosition[1] === 0) return;
-    setKnightPosition((oldPostion) => [oldPostion[0], oldPostion[1] - 1]);
-  }, [knightPosition]);
+    handleNewPosition(knightPosition[0], knightPosition[1] - 1);
+  }, [handleNewPosition, knightPosition]);
 
   const moveUp = useCallback(() => {
     if (knightPosition[0] === 0) return;
-    setKnightPosition((oldPostion) => [oldPostion[0] - 1, oldPostion[1]]);
-  }, [knightPosition]);
+    handleNewPosition(knightPosition[0] - 1, knightPosition[1]);
+  }, [handleNewPosition, knightPosition]);
 
   const moveDown = useCallback(() => {
     if (knightPosition[0] === BOARD_ROWS - 1) return;
-    setKnightPosition((oldPostion) => [oldPostion[0] + 1, oldPostion[1]]);
-  }, [knightPosition]);
+    handleNewPosition(knightPosition[0] + 1, knightPosition[1]);
+  }, [handleNewPosition, knightPosition]);
 
   const handleMoveKnight = useCallback(
     (event) => {
@@ -42,10 +40,6 @@ function useKnightNavigation() {
       document.removeEventListener('keydown', handleMoveKnight);
     };
   }, [handleMoveKnight]);
-
-  return {
-    knightPosition,
-  };
 }
 
 export default useKnightNavigation;
