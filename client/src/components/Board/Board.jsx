@@ -1,25 +1,34 @@
 import React, { useState, useCallback } from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Typography } from 'antd';
+import { ClockCircleOutlined } from '@ant-design/icons';
 
 import './Board.modules.css';
 import { BOARD_COLS, BOARD_ROWS } from '../../utils/constants';
-import { useBoard } from '../../hooks';
+import { useBoard, useTimer } from '../../hooks';
 import Cell from './Cell';
 
 function Board() {
   const [gameOver, setGameOver] = useState(false);
+  const { time, handleStartTimer, handleStopTimer } = useTimer();
 
   const handleWon = useCallback(() => {
     console.log('won');
     setGameOver(true);
-  }, []);
+    handleStopTimer();
+  }, [handleStopTimer]);
 
   const handleFailed = useCallback(() => {
     console.log('failed');
     setGameOver(true);
-  }, []);
+    handleStopTimer();
+  }, [handleStopTimer]);
 
-  const { knightPosition, dangerPositions, collectablePositions } = useBoard(gameOver, handleWon, handleFailed);
+  const { knightPosition, dangerPositions, collectablePositions } = useBoard(
+    gameOver,
+    handleStartTimer,
+    handleWon,
+    handleFailed,
+  );
 
   const cellRenderer = useCallback(() => {
     return Array.from(new Array(BOARD_ROWS)).map((_, row) => {
@@ -37,7 +46,28 @@ function Board() {
     });
   }, [collectablePositions, dangerPositions, knightPosition]);
 
-  return <section className='board'>{cellRenderer()}</section>;
+  return (
+    <section className='board'>
+      <div>
+        <Row className='description'>
+          <Col>
+            <Typography.Title level={4}>Player Name</Typography.Title>
+          </Col>
+          <Col>
+            <Row className='timer'>
+              <Col>
+                <Typography.Title level={4}>{time}s</Typography.Title>
+              </Col>
+              <Col>
+                <ClockCircleOutlined />
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+        {cellRenderer()}
+      </div>
+    </section>
+  );
 }
 
 export default Board;
