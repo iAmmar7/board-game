@@ -27,10 +27,10 @@ router.post('/game', async (req, res) => {
   }
 });
 
-// @route   GET /api/stats
-// @desc    Return game stats
+// @route   GET /api/game
+// @desc    Return game
 // @access  Public
-router.get('/stats', async (req, res) => {
+router.get('/game', async (req, res) => {
   let { currentPage, pageSize } = req.query;
 
   try {

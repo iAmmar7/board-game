@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
-import { Row, Col, Typography } from 'antd';
+import { Link } from 'react-router-dom';
+import { Row, Col, Typography, Button } from 'antd';
 import { ClockCircleOutlined } from '@ant-design/icons';
 
 import './Board.modules.css';
@@ -62,6 +63,13 @@ function Board() {
           </Col>
         </Row>
         {boardRenderer()}
+        <Row className='button'>
+          <Col>
+            <Button type='primary'>
+              <Link to='/leaderboard'>Leader Board</Link>
+            </Button>
+          </Col>
+        </Row>
       </div>
     </section>
   );
