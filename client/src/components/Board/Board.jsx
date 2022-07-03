@@ -4,27 +4,16 @@ import { ClockCircleOutlined } from '@ant-design/icons';
 
 import './Board.modules.css';
 import { BOARD_COLS, BOARD_ROWS } from '../../utils/constants';
-import { useBoard, useTimer } from '../../hooks';
+import { useBoard, useTimer, useGameProgress } from '../../hooks';
 import Cell from './Cell';
+import StatusModal from './StatusModal';
 
 function Board() {
-  const [gameOver, setGameOver] = useState(false);
+  const [gameStatus, setGameStatus] = useState(null);
   const { time, handleStartTimer, handleStopTimer } = useTimer();
-
-  const handleWon = useCallback(() => {
-    console.log('won');
-    setGameOver(true);
-    handleStopTimer();
-  }, [handleStopTimer]);
-
-  const handleFailed = useCallback(() => {
-    console.log('failed');
-    setGameOver(true);
-    handleStopTimer();
-  }, [handleStopTimer]);
-
+  const { handleWon, handleFailed } = useGameProgress(setGameStatus, handleStopTimer);
   const { knightPosition, dangerPositions, collectablePositions } = useBoard(
-    gameOver,
+    gameStatus,
     handleStartTimer,
     handleWon,
     handleFailed,
@@ -49,6 +38,7 @@ function Board() {
   return (
     <section className='board'>
       <div>
+        <StatusModal status={gameStatus} />
         <Row className='description'>
           <Col>
             <Typography.Title level={4}>Player Name</Typography.Title>

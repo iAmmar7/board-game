@@ -34,3 +34,9 @@
 .timer svg {
   margin-top: 6px;
 }
+
+.status-modal h1 { 
+  color: var(--color-secondary) !important;
+  text-align: center;
+  margin: 0px !important;
+}

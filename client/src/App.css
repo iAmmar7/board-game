@@ -1,8 +1,15 @@
 @import '~antd/dist/antd.css';
 
+:root {
+  --color-primary: #010402;
+  --color-secondary: #4BC3B5;
+  --color-tertiary: #1C2C54;
+  --color-pink: #D175B7;
+}
+
 body {
   margin: 0;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Press Start 2P', cursive;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
