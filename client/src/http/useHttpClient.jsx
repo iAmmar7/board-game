@@ -12,7 +12,6 @@ function useHttpClient() {
     });
 
     axiosInstance.interceptors.request.use((config) => {
-      console.log('sending', API_BASE_PATH);
       if (!API_BASE_PATH) return config;
       const url = `${API_BASE_PATH}/${config.url}`;
       return {
