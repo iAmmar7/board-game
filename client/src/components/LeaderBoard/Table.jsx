@@ -9,7 +9,13 @@ function LeaderBoardTable(props) {
 
   return (
     <div className='table-container'>
-      <Table columns={columns} dataSource={data} loading={loading} rowKey='_id' pagination={{ defaultPageSize: 10 }} />
+      <Table
+        columns={columns}
+        dataSource={data}
+        loading={loading}
+        rowKey='_id'
+        pagination={{ className: 'pagination', defaultPageSize: 10 }}
+      />
     </div>
   );
 }

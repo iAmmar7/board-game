@@ -46,17 +46,13 @@ function useLeaderBoardTable() {
               size='small'
               style={{
                 fontSize: '10px',
+                backgroundColor: 'var(--color-secondary)',
+                borderColor: 'var(--color-secondary)',
               }}
             >
               Search
             </Button>
-            <Button
-              onClick={() => clearFilters && handleReset(clearFilters)}
-              size='small'
-              style={{
-                fontSize: '10px',
-              }}
-            >
+            <Button onClick={() => clearFilters && handleReset(clearFilters)} size='small' className='filter-reset'>
               Reset
             </Button>
             <Button
@@ -71,6 +67,7 @@ function useLeaderBoardTable() {
               }}
               style={{
                 fontSize: '10px',
+                color: 'var(--color-secondary)',
               }}
             >
               Filter

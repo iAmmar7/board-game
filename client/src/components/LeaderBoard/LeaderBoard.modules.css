@@ -4,6 +4,7 @@
 
 .title-text {
   margin-bottom: 0px !important;
+  color: var(--color-text) !important;
 }
 
 .title-arrow svg {
@@ -22,4 +23,44 @@
 
 .sorter {
   border: 1px solid red;
+}
+
+.ant-table-thead > tr > th{
+  color: white;
+  background: var(--color-tertiary) !important;
+}
+
+.ant-table-tbody > tr > td {
+  color: white;
+  background: var(--color-tertiary) !important;
+}
+
+.ant-pagination-item-active {
+  border-color: var(--color-secondary) !important;
+}
+
+.ant-pagination-item-active a {
+  color: var(--color-secondary) !important;
+}
+
+.ant-pagination-item:hover {
+  border-color: var(--color-secondary) !important;
+}
+
+.ant-pagination-item:hover a {
+  color: var(--color-secondary) !important;
+}
+
+.ant-pagination-next:hover .ant-pagination-item-link {
+  color: var(--color-secondary) !important;
+  border-color: var(--color-secondary) !important;
+}
+
+.filter-reset {
+  font-size: 10px !important;
+}
+
+.filter-reset:hover {
+  border-color: var(--color-secondary) !important;
+  color: var(--color-secondary) !important;
 }
