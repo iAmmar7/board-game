@@ -9,12 +9,12 @@ const GameSchema = new Schema(
       required: true,
     },
     score: {
-      type: String,
+      type: Number,
       required: true,
     },
     level: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   {
