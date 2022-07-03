@@ -1,14 +1,13 @@
 import React, { useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Row, Col, Typography, Button, Spin } from 'antd';
-import { ClockCircleOutlined } from '@ant-design/icons';
+import { Row, Col, Spin } from 'antd';
 
 import './Board.modules.css';
 import { BOARD_COLS, BOARD_ROWS } from '../../utils/constants';
 import { useBoard, useTimer, useGameProgress } from '../../hooks';
 import Cell from './Cell';
 import StatusModal from './StatusModal';
-import PlayerName from './PlayerName';
+import BoardHeader from './BoardHeader';
+import BoardFooter from './BoardFooter';
 
 function Board() {
   const [playerName, setPlayerName] = useState();
@@ -51,21 +50,7 @@ function Board() {
     <section className='board-section'>
       <div>
         <StatusModal status={gameStatus} handleRestart={handleRestartGame} />
-        <Row className='description'>
-          <Col>
-            <PlayerName handleSetName={setPlayerName} />
-          </Col>
-          <Col>
-            <Row className='timer'>
-              <Col>
-                <Typography.Title level={4}>{time}s</Typography.Title>
-              </Col>
-              <Col>
-                <ClockCircleOutlined />
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+        <BoardHeader setPlayerName={setPlayerName} time={time} />
         <div className='board'>
           {isLoading && (
             <div className='loader'>
@@ -74,13 +59,7 @@ function Board() {
           )}
           {boardRenderer()}
         </div>
-        <Row className='button'>
-          <Col>
-            <Button type='primary'>
-              <Link to='/leaderboard'>Leader Board</Link>
-            </Button>
-          </Col>
-        </Row>
+        <BoardFooter />
       </div>
     </section>
   );
