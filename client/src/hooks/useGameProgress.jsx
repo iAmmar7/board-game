@@ -1,19 +1,21 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
-function useGameProgress(setGameStatus, handleStopTimer) {
+function useGameProgress(stopTimer) {
+  const [gameStatus, setGameStatus] = useState(null);
+
   const handleWon = useCallback(() => {
-    console.log('won');
     setGameStatus('won');
-    handleStopTimer();
-  }, [handleStopTimer, setGameStatus]);
+    stopTimer();
+  }, [stopTimer, setGameStatus]);
 
   const handleFailed = useCallback(() => {
-    console.log('failed');
     setGameStatus('failed');
-    handleStopTimer();
-  }, [handleStopTimer, setGameStatus]);
+    stopTimer();
+  }, [stopTimer, setGameStatus]);
 
-  return { handleWon, handleFailed };
+  const handleResetStatus = useCallback(() => setGameStatus(null), []);
+
+  return { gameStatus, handleWon, handleFailed, handleResetStatus };
 }
 
 export default useGameProgress;

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { Row, Col, Typography } from 'antd';
 import { ClockCircleOutlined } from '@ant-design/icons';
 
@@ -9,17 +9,22 @@ import Cell from './Cell';
 import StatusModal from './StatusModal';
 
 function Board() {
-  const [gameStatus, setGameStatus] = useState(null);
-  const { time, handleStartTimer, handleStopTimer } = useTimer();
-  const { handleWon, handleFailed } = useGameProgress(setGameStatus, handleStopTimer);
-  const { knightPosition, dangerPositions, collectablePositions } = useBoard(
+  const { time, startTimer, stopTimer, resetTimer } = useTimer();
+  const { gameStatus, handleWon, handleFailed, handleResetStatus } = useGameProgress(stopTimer);
+  const { knightPosition, dangerPositions, collectablePositions, handleResetPositions } = useBoard(
     gameStatus,
-    handleStartTimer,
+    startTimer,
     handleWon,
     handleFailed,
   );
 
-  const cellRenderer = useCallback(() => {
+  const handleRestart = () => {
+    resetTimer();
+    handleResetStatus();
+    handleResetPositions();
+  };
+
+  const boardRenderer = useCallback(() => {
     return Array.from(new Array(BOARD_ROWS)).map((_, row) => {
       const col = Array.from(new Array(BOARD_COLS)).map((_, col) => {
         const knight = knightPosition[0] === row && knightPosition[1] === col;
@@ -38,7 +43,7 @@ function Board() {
   return (
     <section className='board'>
       <div>
-        <StatusModal status={gameStatus} />
+        <StatusModal status={gameStatus} handleRestart={handleRestart} />
         <Row className='description'>
           <Col>
             <Typography.Title level={4}>Player Name</Typography.Title>
@@ -54,7 +59,7 @@ function Board() {
             </Row>
           </Col>
         </Row>
-        {cellRenderer()}
+        {boardRenderer()}
       </div>
     </section>
   );

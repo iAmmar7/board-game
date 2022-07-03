@@ -31,10 +31,13 @@ export const generateRandomPositions = (rows, cols) => {
   // Add the danger on the intial random index
   dangerSet.add(`${firstIndex[0]},${firstIndex[1]}`);
 
-  for (let row = firstIndex[0]; row < rows; row++) {
-    let col = row === firstIndex[0] ? firstIndex[1] + 1 : 0;
-    while (col < cols) {
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      // Reserved for knight
+      if (row === 0 && col === 0) continue;
+
       // The next danger should not be within the boundry of the earlier dangers
+      const pos = `${row},${col}`;
       const rightPos = `${row},${col + 1}`;
       const leftPos = `${row},${col - 1}`;
       const topPos = `${row - 1},${col}`;
@@ -45,6 +48,7 @@ export const generateRandomPositions = (rows, cols) => {
       const downRightPos = `${row + 1},${col + 1}`;
 
       if (
+        !dangerSet.has(pos) &&
         !dangerSet.has(rightPos) &&
         !dangerSet.has(leftPos) &&
         !dangerSet.has(topPos) &&
@@ -64,7 +68,9 @@ export const generateRandomPositions = (rows, cols) => {
   // Generate random indexes for collectables
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
+      // Reserved for knight
       if (row === 0 && col === 0) continue;
+
       // Do not add collectables if danger already exists on this position
       if (!dangerSet.has(`${row},${col}`) && randomBool('low')) collectableSet.add(`${row},${col}`);
     }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Modal } from 'antd';
 
 function StatusModal(props) {
-  const { status } = props;
+  const { status, handleRestart } = props;
   const [visibility, setVisibility] = useState(false);
 
   useEffect(() => {
@@ -21,6 +21,7 @@ function StatusModal(props) {
       mask={false}
       onCancel={handleClose}
       onOk={handleClose}
+      afterClose={handleRestart}
       className='status-modal'
       bodyStyle={{
         backgroundColor: 'var(--color-primary)',
