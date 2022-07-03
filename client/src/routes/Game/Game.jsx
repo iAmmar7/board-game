@@ -3,7 +3,7 @@ import React from 'react';
 import { Board } from '../../components';
 import './Game.modules.css';
 
-function Game() {
+function GameRoute() {
   return (
     <section className='board-section'>
       <Board />
@@ -11,4 +11,4 @@ function Game() {
   );
 }
 
-export default Game;
+export default GameRoute;

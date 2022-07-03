@@ -31,17 +31,12 @@ router.post('/game', async (req, res) => {
 // @desc    Return game
 // @access  Public
 router.get('/game', async (req, res) => {
-  let { currentPage, pageSize } = req.query;
-
   try {
-    currentPage = currentPage ?? 1;
-    pageSize = pageSize ?? 10;
+    const games = await Game.find({}).sort({ createdAt: -1 }).populate('player', 'name');
 
-    const sorter = { score: -1 };
-    const offset = +pageSize * (+currentPage - 1);
+    const improvedGames = games.map((game) => ({ _id: game._id, name: game.player.name, score: game.score }));
 
-    const games = await Game.find({}).limit(pageSize).skip(offset).sort(sorter).populate('player', 'name');
-    return res.status(200).json({ success: true, games });
+    return res.status(200).json({ success: true, games: improvedGames });
   } catch (error) {
     console.log('error', error);
     return res.status(400).json({ success: false, message: error });

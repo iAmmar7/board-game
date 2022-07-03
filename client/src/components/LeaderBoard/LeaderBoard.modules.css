@@ -1,0 +1,25 @@
+.container {
+  margin: 30px 20px;
+}
+
+.title-text {
+  margin-bottom: 0px !important;
+}
+
+.title-arrow svg {
+  margin: 0px 20px 4px 0px;
+  cursor: pointer;
+  color: var(--color-secondary)
+}
+
+.table-container {
+  margin-top: 10px;
+}
+
+.column-title {
+  color: var(--color-secondary) !important;
+}
+
+.sorter {
+  border: 1px solid red;
+}

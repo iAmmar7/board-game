@@ -9,7 +9,7 @@ function useGameResource() {
   return {
     games: data,
     error,
-    isLoading,
+    loading: isLoading,
   };
 }
 
