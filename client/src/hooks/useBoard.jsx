@@ -4,7 +4,7 @@ import { BOARD_ROWS, BOARD_COLS } from '../utils/constants';
 import { generateRandomPositions } from '../utils/helpers';
 import useKnightNavigation from './useKnightNavigation';
 
-function useBoard(gameStatus, handleGameStart, handlePlayerWon, handlePlayerFailed) {
+function useBoard(gameStatus, startTimer, handlePlayerWon, handlePlayerFailed) {
   const [knightPosition, setKnightPosition] = useState([0, 0]);
   const [reset, setReset] = useState(false);
 
@@ -18,7 +18,7 @@ function useBoard(gameStatus, handleGameStart, handlePlayerWon, handlePlayerFail
   const handleSetKnightPosition = useCallback(
     (newRow, newCol) => {
       if (gameStatus) return;
-      handleGameStart();
+      startTimer();
       if (collectableSet.has(`${newRow},${newCol}`)) {
         collectableSet.delete(`${newRow},${newCol}`);
         setKnightPosition([newRow, newCol]);
@@ -32,7 +32,7 @@ function useBoard(gameStatus, handleGameStart, handlePlayerWon, handlePlayerFail
       }
       setKnightPosition([newRow, newCol]);
     },
-    [collectableSet, dangerSet, gameStatus, handleGameStart, handlePlayerFailed, handlePlayerWon],
+    [collectableSet, dangerSet, gameStatus, startTimer, handlePlayerFailed, handlePlayerWon],
   );
 
   useKnightNavigation(knightPosition, handleSetKnightPosition);

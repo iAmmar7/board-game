@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Row, Col, Typography } from 'antd';
 import { ClockCircleOutlined } from '@ant-design/icons';
 
@@ -7,8 +7,10 @@ import { BOARD_COLS, BOARD_ROWS } from '../../utils/constants';
 import { useBoard, useTimer, useGameProgress } from '../../hooks';
 import Cell from './Cell';
 import StatusModal from './StatusModal';
+import PlayerName from './PlayerName';
 
 function Board() {
+  const [playerName, setPlayerName] = useState();
   const { time, startTimer, stopTimer, resetTimer } = useTimer();
   const { gameStatus, handleWon, handleFailed, handleResetStatus } = useGameProgress(stopTimer);
   const { knightPosition, dangerPositions, collectablePositions, handleResetPositions } = useBoard(
@@ -18,7 +20,7 @@ function Board() {
     handleFailed,
   );
 
-  const handleRestart = () => {
+  const handleRestartGame = () => {
     resetTimer();
     handleResetStatus();
     handleResetPositions();
@@ -43,10 +45,10 @@ function Board() {
   return (
     <section className='board'>
       <div>
-        <StatusModal status={gameStatus} handleRestart={handleRestart} />
+        <StatusModal status={gameStatus} handleRestart={handleRestartGame} />
         <Row className='description'>
           <Col>
-            <Typography.Title level={4}>Player Name</Typography.Title>
+            <PlayerName handleSetName={setPlayerName} />
           </Col>
           <Col>
             <Row className='timer'>
