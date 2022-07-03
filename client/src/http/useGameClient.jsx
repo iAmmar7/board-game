@@ -14,7 +14,7 @@ const useCardClient = () => {
     return httpClient.get('game').then((res) => res.data);
   }, [httpClient]);
 
-  return { saveGame, getGames };
+  return { saveGame: saveGame.mutateAsync, getGames };
 };
 
 export default useCardClient;

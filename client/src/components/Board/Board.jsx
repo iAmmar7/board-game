@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Row, Col, Typography, Button } from 'antd';
+import { Row, Col, Typography, Button, Spin } from 'antd';
 import { ClockCircleOutlined } from '@ant-design/icons';
 
 import './Board.modules.css';
@@ -13,11 +13,15 @@ import PlayerName from './PlayerName';
 function Board() {
   const [playerName, setPlayerName] = useState();
   const { time, startTimer, stopTimer, resetTimer } = useTimer();
-  const { gameStatus, handleWon, handleFailed, handleResetStatus } = useGameProgress(stopTimer);
+  const { gameStatus, isLoading, canPlay, handleFailed, handleResetStatus, handleSaveGame } = useGameProgress(
+    playerName,
+    time,
+    stopTimer,
+  );
   const { knightPosition, dangerPositions, collectablePositions, handleResetPositions } = useBoard(
-    gameStatus,
+    canPlay,
     startTimer,
-    handleWon,
+    handleSaveGame,
     handleFailed,
   );
 
@@ -44,7 +48,7 @@ function Board() {
   }, [collectablePositions, dangerPositions, knightPosition]);
 
   return (
-    <section className='board'>
+    <section className='board-section'>
       <div>
         <StatusModal status={gameStatus} handleRestart={handleRestartGame} />
         <Row className='description'>
@@ -62,7 +66,14 @@ function Board() {
             </Row>
           </Col>
         </Row>
-        {boardRenderer()}
+        <div className='board'>
+          {isLoading && (
+            <div className='loader'>
+              <Spin />
+            </div>
+          )}
+          {boardRenderer()}
+        </div>
         <Row className='button'>
           <Col>
             <Button type='primary'>

@@ -13,6 +13,12 @@ function PlayerName(props) {
   }, [name, handleSetName]);
 
   const handleChange = (newName) => {
+    if (newName.length < 2) {
+      localStorage.removeItem('playerName');
+      const newRandomName = `player-${nanoid(5)}`;
+      setName(newRandomName);
+      return;
+    }
     localStorage.setItem('playerName', newName);
     setName(newName);
   };
