@@ -7,6 +7,7 @@ import { Fallback } from './components';
 import './App.css';
 
 const Game = lazy(() => import('./routes/Game/Game'));
+const LeaderBoard = lazy(() => import('./routes/LeaderBoard/LeaderBoard'));
 
 const queryClient = new QueryClient();
 
@@ -17,6 +18,7 @@ function App() {
         <Suspense fallback={<Fallback />}>
           <Routes>
             <Route path='/' element={<Game />} />
+            <Route path='/leaderboard' element={<LeaderBoard />} />
           </Routes>
         </Suspense>
       </Router>
