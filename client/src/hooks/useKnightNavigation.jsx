@@ -40,6 +40,8 @@ function useKnightNavigation(knightPosition, handleNewPosition) {
       document.removeEventListener('keydown', handleMoveKnight);
     };
   }, [handleMoveKnight]);
+
+  return { moveRight, moveLeft, moveDown, moveUp };
 }
 
 export default useKnightNavigation;

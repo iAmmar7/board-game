@@ -3,11 +3,12 @@ import { Row, Col, Spin } from 'antd';
 
 import './Board.modules.css';
 import { BOARD_COLS, BOARD_ROWS } from '../../utils/constants';
-import { useBoard, useTimer, useGameProgress } from '../../hooks';
+import { useBoard, useTimer, useGameProgress, useKnightNavigation } from '../../hooks';
 import Cell from './Cell';
 import StatusModal from './StatusModal';
 import BoardHeader from './BoardHeader';
 import BoardFooter from './BoardFooter';
+import Navigator from './Navigator';
 
 function Board() {
   const [playerName, setPlayerName] = useState();
@@ -17,12 +18,9 @@ function Board() {
     time,
     stopTimer,
   );
-  const { knightPosition, dangerPositions, collectablePositions, handleResetPositions } = useBoard(
-    canPlay,
-    startTimer,
-    handleSaveGame,
-    handleFailed,
-  );
+  const { knightPosition, dangerPositions, collectablePositions, handleResetPositions, handleSetKnightPosition } =
+    useBoard(canPlay, startTimer, handleSaveGame, handleFailed);
+  const { moveLeft, moveRight, moveUp, moveDown } = useKnightNavigation(knightPosition, handleSetKnightPosition);
 
   const handleRestartGame = () => {
     resetTimer();
@@ -54,12 +52,13 @@ function Board() {
         <div className='board'>
           {isLoading && (
             <div className='loader'>
-              <Spin />
+              <Spin size='large' />
             </div>
           )}
           {boardRenderer()}
         </div>
         <BoardFooter />
+        <Navigator moveLeft={moveLeft} moveRight={moveRight} moveUp={moveUp} moveDown={moveDown} />
       </div>
     </section>
   );

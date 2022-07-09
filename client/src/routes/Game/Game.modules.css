@@ -1,9 +1,10 @@
-.board-section {
+.game-section {
   min-height: 100vh;
   max-width: 1200px;
+  min-width: 750px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
+  margin: auto;
 }

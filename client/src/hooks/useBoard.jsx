@@ -2,7 +2,6 @@ import { useCallback, useState, useMemo } from 'react';
 
 import { BOARD_ROWS, BOARD_COLS } from '../utils/constants';
 import { generateRandomPositions } from '../utils/helpers';
-import useKnightNavigation from './useKnightNavigation';
 
 function useBoard(canPlay, startTimer, handleSaveGame, handlePlayerFailed) {
   const [knightPosition, setKnightPosition] = useState([0, 0]);
@@ -35,13 +34,12 @@ function useBoard(canPlay, startTimer, handleSaveGame, handlePlayerFailed) {
     [canPlay, startTimer, collectableSet, dangerSet, handleSaveGame, handlePlayerFailed],
   );
 
-  useKnightNavigation(knightPosition, handleSetKnightPosition);
-
   return {
     knightPosition,
     dangerPositions: dangerSet,
     collectablePositions: collectableSet,
     handleResetPositions,
+    handleSetKnightPosition,
   };
 }
 

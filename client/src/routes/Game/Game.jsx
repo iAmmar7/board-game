@@ -5,7 +5,7 @@ import './Game.modules.css';
 
 function GameRoute() {
   return (
-    <section className='board-section'>
+    <section className='game-section'>
       <Board />
     </section>
   );
